@@ -6,5 +6,5 @@ using UnityEngine;
 [AddComponentMenu("Control Script/ Head")]
 public class Head : MonoBehaviour
 {
-  
+   
 }

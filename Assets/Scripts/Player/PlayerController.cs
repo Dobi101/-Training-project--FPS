@@ -25,6 +25,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     [Range(0f, 100f)]
     private float _acceleration = 10f;
+    [SerializeField]
+    [Range(0f, 90f)]
+    [Tooltip("ћаксимальна€ наклонна€ поверхность дл€ движени€")]
+    private float _slopeAngle = 45f;
 
     [Header("Jump settings")]
     [SerializeField]
@@ -41,7 +45,7 @@ public class PlayerController : MonoBehaviour
     [Tooltip("—лои дл€ проверки нахождени€ на земле")]
     private LayerMask _layerMask;
 
-
+    private float _slideBoost;
 
     private float _rotationX = 0;
     private float _rotationY = 0;
@@ -51,7 +55,9 @@ public class PlayerController : MonoBehaviour
     private Rigidbody _rigidbody;
     private CapsuleCollider _collider;
 
-    private bool _IsGround;
+    private bool _isGround;
+    private bool _isSlide;
+    private bool _prevSlideState;
 
     private int _jumpsCount;
     
@@ -74,13 +80,21 @@ public class PlayerController : MonoBehaviour
     {
         PhysicalVelocity();
     }
-
+    private void OnCollisionStay(Collision collision)
+    {
+        _isGround = false;
+        foreach (var contact in collision.contacts)
+        {
+           if(Vector3.Angle(transform.up, contact.normal) <= _slopeAngle)
+            {
+                _isGround = true;
+                return;
+            }
+        }   
+    }
     private void CheckGround()
     {
-        Ray ray = new Ray(transform.position, -transform.up);
-        RaycastHit hit;
-        _IsGround = Physics.Raycast(ray, out hit, _collider.height / 2 + 0.001f, _layerMask);
-        if (_IsGround)
+        if (_isGround)
         {
             if(_jumpsCount != _jumpsMaxCount)
             {
@@ -94,8 +108,6 @@ public class PlayerController : MonoBehaviour
                 _jumpsCount = _jumpsMaxCount - 1;
             }
         }
-
-
     }
     private void HandleMouse()
     {
@@ -113,24 +125,30 @@ public class PlayerController : MonoBehaviour
 
     private void HandleMovement()
     {
-        Vector3 movementDirection = transform.right * Input.GetAxis("Horizontal") 
+            Vector3 movementDirection = transform.right * Input.GetAxis("Horizontal")
             + transform.forward * Input.GetAxis("Vertical");
-        if (movementDirection.magnitude > 1f)
-        {
-            movementDirection =movementDirection.normalized;
-        }
-        _desiredVelocity = movementDirection * _movementSpeed;
+            if (movementDirection.magnitude > 1f)
+            {
+                movementDirection = movementDirection.normalized;
+            }
+            if (!_isSlide)
+            {
+                _desiredVelocity = movementDirection * _movementSpeed;
+            }
+           
         
-        if((Input.GetKeyDown(KeyCode.Space) && _IsGround) ||
-            (Input.GetKeyDown(KeyCode.Space) && _jumpsCount < _jumpsMaxCount && _jumpsCount>0))
-        {
+        
+        if((Input.GetKeyDown(KeyCode.Space) && _isGround) || (Input.GetKeyDown(KeyCode.Space) && _jumpsCount < _jumpsMaxCount && _jumpsCount > 0)) 
+        {     
+        
             _jumpsCount--;
             float g = Mathf.Abs(Physics.gravity.y);
             float verticalVelocity = Mathf.Sqrt(2 * _jumpHeight * g) ;
+            _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, 0, _rigidbody.velocity.z);
             _rigidbody.AddForce(Vector3.up * _rigidbody.mass * verticalVelocity, ForceMode.Impulse);
         }
-        
     }
+
 
     private void PhysicalVelocity()
     {
@@ -139,7 +157,7 @@ public class PlayerController : MonoBehaviour
         currentVelocity.y = 0;
         if (_desiredVelocity != currentVelocity)
         {
-            float acceleration = _IsGround ? _acceleration : _acceleration * _accelerationJump;
+            float acceleration = ( _isGround ? _acceleration : _acceleration * _accelerationJump);
 
             float interpolation = acceleration * Time.deltaTime / 
                 (_desiredVelocity - currentVelocity).magnitude;
@@ -147,5 +165,6 @@ public class PlayerController : MonoBehaviour
         }
         currentVelocity.y = yVelocity;
         _rigidbody.velocity = currentVelocity;
+        _isGround = false;
     }
 }
