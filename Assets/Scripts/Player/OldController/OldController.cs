@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-[AddComponentMenu("Control Script/ PlayerController")]
-public class PlayerController : MonoBehaviour
+[AddComponentMenu("Control Script/ OldController")]
+public class OldController : MonoBehaviour
 {
     [Header("Components")] 
     [SerializeField]

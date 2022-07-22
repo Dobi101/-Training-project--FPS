@@ -21,7 +21,7 @@ public class JumpPlatform : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.GetComponent<PlayerController>() != null)
+        if(other.GetComponent<PlayerMovement>() != null)
         {
             Rigidbody rigidbody = other.GetComponent<Rigidbody>();
             rigidbody.velocity = new Vector3(rigidbody.velocity.x, 0, rigidbody.velocity.z);
