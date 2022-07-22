@@ -70,6 +70,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+
         CheckGround();
         Handle();
         ControlDrag();
