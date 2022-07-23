@@ -86,6 +86,10 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
+    public void GetMethod()
+    {
+        Debug.Log("О  Да");
+    }
     private bool OnSlope()
     {
         RaycastHit slopeHit;

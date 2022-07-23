@@ -10,6 +10,8 @@ public class TriggerMovementPlatform : MonoBehaviour
     private Transform _endPosition;
     [SerializeField]
     private float _speed;
+    [SerializeField]
+    private bool _loop;
 
     private Vector3 _moveToPosition;
 
@@ -25,12 +27,12 @@ public class TriggerMovementPlatform : MonoBehaviour
         if (_start)
         {
             transform.position = Vector3.MoveTowards(transform.position, _moveToPosition, _speed * Time.deltaTime);
-            if (transform.position == _endPosition.position)
+            if (transform.position == _endPosition.position && _loop)
             {
                 _moveToPosition = _startPosition;
                 _start = false;
             }
-            if (transform.position == _startPosition)
+            if (transform.position == _startPosition && _loop)
             {
                 _moveToPosition = _endPosition.position;
                 _start = false;
