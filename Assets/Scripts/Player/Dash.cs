@@ -36,7 +36,7 @@ public class Dash : MonoBehaviour
 
     private void Update()
     {
-        if (!_playerMovement.isGrounded && Input.GetKeyDown(KeyCode.LeftControl) && !_isDash && _dashTimerInside==0)
+        if (_playerMovement.isGrounded && Input.GetKeyDown(KeyCode.LeftControl) && !_isDash && _dashTimerInside==0)
         {
             if(_playerMovement.movementDirection != Vector3.zero)
             {

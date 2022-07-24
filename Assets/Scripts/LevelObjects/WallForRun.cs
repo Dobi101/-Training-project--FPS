@@ -13,4 +13,12 @@ public class WallForRun : MonoBehaviour
             _wallrun.TryStartWallRun();
         }
     }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            _wallrun.StopWallRun();
+        }
+    }
 }

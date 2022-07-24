@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class WallRun : MonoBehaviour
 {
+    [Header("Components")]
     [SerializeField]
     private PlayerMovement _playerMovement;
     [SerializeField]
     private Transform _rotaitor;
 
+    [Header("Settings")]
     [SerializeField] 
     private float _wallRunGravity;
     [SerializeField]
