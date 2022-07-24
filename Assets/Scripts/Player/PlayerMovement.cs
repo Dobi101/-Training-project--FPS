@@ -41,54 +41,66 @@ public class PlayerMovement : MonoBehaviour
 
     private float _groundDistance = 0.4f;
 
-
-
-
     private Vector3 _movementDirection;
     private Vector3 _slopeDirection;
-
-    private float _horizontalMovement;
-    private float _verticalMovement;
 
     private int _jumpCount;
 
     private Rigidbody _rigidbody;
     private CapsuleCollider _collider;
+    private WallRun _wallRunComponent;
 
     private bool _isGrounded;
     private bool _doubleJump;
+    private bool _wallRun;
 
-   
+    public bool wallRun => _wallRun;
+    public bool isGrounded => _isGrounded;
+    public Vector3 movementDirection => _movementDirection;
 
     private void Start()
     {
         _collider = GetComponent<CapsuleCollider>();
         _rigidbody = GetComponent<Rigidbody>();
+        _wallRunComponent = GetComponent<WallRun>();
         _rigidbody.freezeRotation = true;
         _jumpCount = 2;
     }
 
     private void Update()
     {
-
         CheckGround();
-        Handle();
-        ControlDrag();
+
+        if (!_wallRun)
+        {
+            Handle();
+            ControlDrag();
+        }
     }
 
     private void FixedUpdate()
     {
-        if( _movementDirection != Vector3.zero)
+        if (!_wallRun)
         {
-            Movement();
+            if (_movementDirection != Vector3.zero)
+            {
+                Movement();
+            }
         }
         
 
+
     }
 
-    public void GetMethod()
+    public void StartWallRun()
     {
-        Debug.Log("О  Да");
+        _wallRun = true;
+    }
+
+    public void EndWallRun()
+    {
+        _wallRun = false;
+        _jumpCount = 2;
     }
     private bool OnSlope()
     {
@@ -126,6 +138,12 @@ public class PlayerMovement : MonoBehaviour
             {
                 _jumpCount = 1;
             }
+        }
+
+
+        if (_wallRun && _isGrounded)
+        {
+            _wallRunComponent.StopWallRun();
         }
 
     }
