@@ -236,9 +236,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerMovement: {fileID: 1021270192}
-  _slideBoost: 200
-  _slideFriction: 0.073
-  _slideLimitation: 1
+  _dashBoost: 100
+  _dashFriction: 0.444
+  _dashLimitation: 10
+  _dashTimer: 0
 --- !u!1 &6341615017431697216
 GameObject:
   m_ObjectHideFlags: 0

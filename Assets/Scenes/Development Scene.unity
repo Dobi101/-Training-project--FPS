@@ -753,22 +753,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1858033713, guid: ad600a3069c68a749a9a4e0633d29322, type: 3}
-      propertyPath: _dashBoost
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 1858033713, guid: ad600a3069c68a749a9a4e0633d29322, type: 3}
-      propertyPath: _dashTimer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1858033713, guid: ad600a3069c68a749a9a4e0633d29322, type: 3}
-      propertyPath: _dashFriction
-      value: 0.444
-      objectReference: {fileID: 0}
-    - target: {fileID: 1858033713, guid: ad600a3069c68a749a9a4e0633d29322, type: 3}
-      propertyPath: _dashLimitation
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 6341615017295162768, guid: ad600a3069c68a749a9a4e0633d29322, type: 3}
       propertyPath: m_Name
       value: Player
