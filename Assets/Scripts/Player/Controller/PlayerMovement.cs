@@ -53,10 +53,13 @@ public class PlayerMovement : MonoBehaviour
     private bool _isGrounded;
     private bool _doubleJump;
     private bool _wallRun;
+    private bool _isHookshot;
 
     public bool wallRun => _wallRun;
     public bool isGrounded => _isGrounded;
     public Vector3 movementDirection => _movementDirection;
+
+    public float jumpForce => _jumpForce;
 
     private void Start()
     {
@@ -71,7 +74,7 @@ public class PlayerMovement : MonoBehaviour
     {
         CheckGround();
 
-        if (!_wallRun)
+        if (!_wallRun || !_isHookshot)
         {
             Handle();
             ControlDrag();
@@ -80,7 +83,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!_wallRun)
+        if (!_wallRun || !_isHookshot)
         {
             if (_movementDirection != Vector3.zero)
             {
@@ -92,6 +95,16 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
+    public void StartHookshot()
+    {
+        _isHookshot = true;
+    }
+
+    public void EndHookshot()
+    {
+        _isHookshot = false;
+        _jumpCount = 2;
+    }
     public void StartWallRun()
     {
         _wallRun = true;
