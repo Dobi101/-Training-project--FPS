@@ -8,6 +8,7 @@ public class WandaringAI : MonoBehaviour
     [SerializeField] private float _obstacleRange = 5.0f;
     [SerializeField] private GameObject _fireballPrefab;
     [SerializeField] private float _speedFireball = 1.5f;
+    [SerializeField] private float _radiusSphere = 1.5f;
     
     private GameObject _fireball;
     private bool _alive;
@@ -25,7 +26,7 @@ public class WandaringAI : MonoBehaviour
 
             Ray ray = new Ray(transform.position, transform.forward);
             RaycastHit hit;
-            if (Physics.SphereCast(ray, 0.75f, out hit))
+            if (Physics.SphereCast(ray, _radiusSphere, out hit))
             {
                 GameObject hitObject  = hit.transform.gameObject;
                 if (hitObject.GetComponent<PlayerCharacter>())
