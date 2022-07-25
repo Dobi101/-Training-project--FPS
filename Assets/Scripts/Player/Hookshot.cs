@@ -96,6 +96,12 @@ public class Hookshot : MonoBehaviour
             _rigidbody.useGravity = true;
             _playerMovement.EndHookshot();
         }
+        if (_playerMovement.wallRun)
+        {
+            _isHookshot = false;
+            _rigidbody.useGravity = true;
+            _playerMovement.EndHookshot();
+        }
     }
 
     private void HookshotMovement()

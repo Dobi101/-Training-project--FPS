@@ -10,11 +10,13 @@ public class PlayerCharacter : MonoBehaviour
     private int _healthAmount;
     private Vector3 _respawnPoint;
     private int _health;
+    private Rigidbody _rigidbody;
 
     private void Start()
     {
         _health = _healthAmount;
         _respawnPoint = transform.position;
+        _rigidbody = GetComponent<Rigidbody>();
     }
 
     public void Hurt(int damage)
@@ -35,5 +37,6 @@ public class PlayerCharacter : MonoBehaviour
     public void Die()
     {
         transform.position = _respawnPoint;
+        _rigidbody.velocity = Vector3.zero;
     }
 }
