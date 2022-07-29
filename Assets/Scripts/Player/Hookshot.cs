@@ -63,7 +63,6 @@ public class Hookshot : MonoBehaviour
         {
             if(Physics.Raycast(_camera.transform.position, _camera.transform.forward, out RaycastHit raycastHit, _maxDistance, _layerMask))
             {
-                // добавить проверку на объект
                 _hookshotPosition = raycastHit.point;
                 if (_playerMovement.wallRun)
                 {
